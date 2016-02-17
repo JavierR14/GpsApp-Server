@@ -1,6 +1,6 @@
 class TestController < ApplicationController
   def index
     render json: {hello: :team}
-    puts "hello"
+    render "hello, it's Jitin!"
   end
 end

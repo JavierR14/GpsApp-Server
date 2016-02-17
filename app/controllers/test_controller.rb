@@ -1,6 +1,5 @@
 class TestController < ApplicationController
   def index
-    render json: {hello: :team}
-    render json: {Jitin: :is here}
+      render json: {hello: :team, jitin: :isHere}
   end
 end

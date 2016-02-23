@@ -11,24 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222044442) do
+ActiveRecord::Schema.define(version: 20160223034059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "locations", force: :cascade do |t|
-    t.integer "bid",       null: false
-    t.integer "tid",       null: false
-    t.float   "latitude"
-    t.float   "longitude"
+  create_table "users", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.float    "location_latitude"
+    t.float    "location_longitude"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
-  create_table "persons", force: :cascade do |t|
-    t.string "fname"
-    t.string "lname"
-    t.string "email", null: false
-  end
-
-  add_foreign_key "locations", "persons", column: "bid", name: "bid_fk"
-  add_foreign_key "locations", "persons", column: "tid", name: "tid_fk"
 end

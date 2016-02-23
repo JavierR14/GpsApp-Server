@@ -35,10 +35,20 @@ Postgres
 * \q
 	* to quit postgres
 * bin/rails generate migration MigrationName
+	* we don't want this, we want to generate a model, next command
 	* to generate a migration (change to db) in root of folder
 	* more on migrations here: http://guides.rubyonrails.org/active_record_migrations.html
+* rails generate model User first_name:string last_name:string email:string
+        * this is how we generated the User model
 * rake db:migrate
 	* to update db after new migration file is created
+
+Rails
+* rails c, to start rails console, quit to exit
+* me = User.new(first_name: "Jitin", last_name: "Dodd", location_latitude: "-45.234", location_longitude: "98.234") followed by me.save!
+	* to create a new User and save it
+* User.all
+	* shows all content of User model/table
 
 SQL
 * INSERT INTO persons (fname, lname, email) VALUES ('Jitin','Dodd','jitindodd@gmail.com');

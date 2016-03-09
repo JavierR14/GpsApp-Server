@@ -1,6 +1,6 @@
 class ApiController < ApplicationController  
 
-	http_basic_authenticate_with email:ENV["API_AUTH_EMAIL"], :only => [:signup, :signin, :get_token]  
+	# http_basic_authenticate_with email:ENV["API_AUTH_EMAIL"], :only => [:signup, :signin, :get_token]  
   	#make sure any request that is not a signup, signin, or get_token has it's authtoken checked
   	before_filter :check_for_valid_authtoken, :except => [:signup, :signin, :get_token]	
 
@@ -10,7 +10,7 @@ class ApiController < ApplicationController
 	      user = User.where(:email => params[:email]).first
 	      
 	      unless user                   
-	      	user = User.new(first_name: params[first_name], last_name: params[last_name], email: params[email])
+	      	user = User.new(first_name: params[:first_name], last_name: params[:last_name], email: params[:email])
 	      end
 	      
 	      if !user.authtoken || (user.authtoken && user.authtoken_expiry < Time.now)
@@ -25,7 +25,6 @@ class ApiController < ApplicationController
 	      render :json => e.to_json, :status => 400
 	    end
 	  end
-	  render json: {status: :ok}
 	end
 
 	def get_token

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-	get 'test/index'
+	root 'home#index'
+	get 'home/index'
 	
 	post 'api/signup'
 	post 'api/signin'

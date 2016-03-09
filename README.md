@@ -57,3 +57,9 @@ SQL
 	* view data in a table
 * ALTER TABLE "locations" ADD CONSTRAINT "bid_fk" FOREIGN KEY ("bid") REFERENCES "persons"(id);
 	* Example showing how to add a foreign key to a column
+
+HEROKU
+* herou restart
+	* to restart server dynos
+* heroku logs (or heroku logs --tail)
+	* to view server logs (or live logs)

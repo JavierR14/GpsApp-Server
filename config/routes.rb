@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 	root 'test#index'
-	get 'test/index'
+	#get 'test/index'
 	
-	post 'api/signup'
-	post 'api/signin'
+	post 'api/signup' => 'api#signup'
+	post 'api/signin' => 'api#signin'
 
 	get 'api/get_token'
 	get 'api/clear_token'

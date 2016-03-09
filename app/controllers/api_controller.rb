@@ -3,7 +3,7 @@ class ApiController < ApplicationController
 	http_basic_authenticate_with email:ENV["API_AUTH_EMAIL"], :only => [:signup, :signin, :get_token]  
   	#make sure any request that is not a signup, signin, or get_token has it's authtoken checked
   	before_filter :check_for_valid_authtoken, :except => [:signup, :signin, :get_token]	
-
+  	
 	def signin
 	  if request.post?
 	    if params && params[:email]

@@ -7,4 +7,8 @@ class ApplicationController < ActionController::Base
     e = Error.new(:status => 404, :message => "Wrong URL or HTTP method")    
     render :json => e.to_json, :status => 404
   end
+
+  def page_sleeper
+  	render json: {"hello":"hi"}
+  end
 end

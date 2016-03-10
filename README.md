@@ -49,6 +49,10 @@ Rails
 	* to create a new User and save it
 * User.all
 	* shows all content of User model/table
+* User.delete_all
+	* deletes all data in User model
+* rails generate migration add_columnname_to_tablename columnname:datatype
+	* to add a property to a model
 
 SQL
 * INSERT INTO persons (fname, lname, email) VALUES ('Jitin','Dodd','jitindodd@gmail.com');
@@ -63,3 +67,6 @@ HEROKU
 	* to restart server dynos
 * heroku logs (or heroku logs --tail)
 	* to view server logs (or live logs)
+* heroku pg:reset DATABASE_URL, heroku run rake db:migrate
+	* equivalent to rake db:drop, rake db:create, aka, destroys db then recreates it
+

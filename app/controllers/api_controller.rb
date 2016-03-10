@@ -10,7 +10,7 @@ class ApiController < ApplicationController
 	      
 	      unless user                   
 	      	user = User.new(first_name: params[:name].split(" ").first,
-	      	 last_name: params[:name].split(" ").last, email: params[:email], image: params[:image])
+	      	 last_name: params[:name].split(" ").last, email: params[:email], profile_pic: params[:image])
 	      end
 	      
 	      if !user.authtoken || (user.authtoken && user.authtoken_expiry < Time.now)

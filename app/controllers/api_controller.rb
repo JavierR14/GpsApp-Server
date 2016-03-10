@@ -1,8 +1,7 @@
 class ApiController < ApplicationController  
-
 	# http_basic_authenticate_with email:ENV["API_AUTH_EMAIL"], :only => [:signup, :signin, :get_token]  
-  	#make sure any request that is not a signup, signin, or get_token has it's authtoken checked
-  	before_filter :check_for_valid_authtoken, :except => [:signup, :signin, :get_token]	
+	#make sure any request that is not a signup, signin, or get_token has it's authtoken checked
+	before_filter :check_for_valid_authtoken, :except => [:signup, :signin, :get_token]	
 
 	def signin
 	  if request.post?
@@ -10,7 +9,8 @@ class ApiController < ApplicationController
 	      user = User.where(:email => params[:email]).first
 	      
 	      unless user                   
-	      	user = User.new(first_name: params[:first_name], last_name: params[:last_name], email: params[:email])
+	      	user = User.new(first_name: params[:name].split(" ").first,
+	      	 last_name: params[:name].split(" ").last, email: params[:email], image: params[:image])
 	      end
 	      
 	      if !user.authtoken || (user.authtoken && user.authtoken_expiry < Time.now)
@@ -79,33 +79,4 @@ class ApiController < ApplicationController
 	def user_params
 	  params.require(:user).permit(:first_name, :last_name, :email, :authtoken, :authtoken_expiry)
 	end
-
-	# def signup
-	#   if request.post?
-	#     if params && params[:first_name] && params[:last_name] && params[:email]
-	#       params[:user] = Hash.new    
-	#       params[:user][:first_name] = params[:first_name]
-	#       params[:user][:last_name] = params[:last_name]
-	#       params[:user][:email] = params[:email]
-
-	#       user = User.new(user_params)
-
-	#       if user.save
-	#         render :json => user.to_json, :status => 200
-	#       else
-	#         error_str = ""
-
-	#         user.errors.each{|attr, msg|           
-	#           error_str += "#{attr} - #{msg},"
-	#         }
-	                  
-	#         e = Error.new(:status => 400, :message => error_str)
-	#         render :json => e.to_json, :status => 400
-	#       end
-	#     else
-	#       e = Error.new(:status => 400, :message => "required parameters are missing")
-	#       render :json => e.to_json, :status => 400
-	#     end
-	#   end
-	# end
 end

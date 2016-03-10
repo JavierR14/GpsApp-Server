@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304000823) do
+ActiveRecord::Schema.define(version: 20160310022600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20160304000823) do
     t.datetime "updated_at",         null: false
     t.string   "authtoken"
     t.datetime "authtoken_expiry"
+    t.text     "profile_pic"
   end
 
 end

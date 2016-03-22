@@ -85,7 +85,13 @@ class ApiController < ApplicationController
 			lat = params[:latitude]
 			long = params[:longitude]
 			token = params[:auth_token]
- 			render json: {status:200, message: "long:#{long} - lat:#{lat} - token:#{token}"}
+			user = User.find_by(authtoken: token)
+			unless user
+				user.update_attributes(:location_longitude => long, :location_latitude => lat)
+				render json: {status:200, message: "long:#{long} - lat:#{lat} - token:#{token} added to db"}
+			else
+				render json: {status:400, message: "Error: User not found"}
+			end
 		else
 			render json: {status:401, message: "Error: Correct paramters are not given"}
 		end

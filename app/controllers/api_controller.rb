@@ -6,7 +6,7 @@ class ApiController < ApplicationController
 	def signin
 	  if request.post?
 	    if params && params[:email]
-	      user = User.find_by(:email params[:email])
+	      user = User.find_by(email: params[:email])
 
 	      unless user
 	      	user = User.new(first_name: params[:name].split(" ").first,
@@ -29,7 +29,7 @@ class ApiController < ApplicationController
 
 	def get_token
 	  if params && params[:email]
-	    user = User.find_by(:email params[:email])
+	    user = User.find_by(email: params[:email])
 	    if user
 	      if user.authtoken.nil? || (user.authtoken && user.authtoken_expiry < Time.now)
 	        auth_token = rand_string(20)
@@ -65,7 +65,7 @@ class ApiController < ApplicationController
 
 	def check_for_valid_authtoken
 	  authenticate_or_request_with_http_token do |token, options|
-	    @user = User.find_by(:authtoken token)
+	    @user = User.find_by(authtoken: token)
 	  end
 	end
 

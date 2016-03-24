@@ -101,4 +101,17 @@ class ApiController < ApplicationController
 		end
 	end
 
+	def get_location
+		if params && params[:email] && params[:auth_token]
+			email = params[:email]
+			user = User.find_by(email: email)
+			unless user == nil
+				lat = user.location_latitude
+				long = user.location_longitude
+			else
+				# return error
+			end
+			# return error
+		end
+	end
 end

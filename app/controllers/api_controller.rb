@@ -108,10 +108,11 @@ class ApiController < ApplicationController
 			unless user == nil
 				lat = user.location_latitude
 				long = user.location_longitude
+				render json: {status:200, latitude: lat, longitude: long}
 			else
-				# return error
+				render json: {status:401, message: "Error: User not found"}
 			end
-			# return error
+			render json: {status:401, message: "Error: incorrect paramaters"}
 		end
 	end
 end

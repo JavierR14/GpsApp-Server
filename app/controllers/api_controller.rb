@@ -87,7 +87,7 @@ class ApiController < ApplicationController
 			long = params[:longitude]
 			token = params[:auth_token]
 
-			if lat.abs > 90 || long.abs > 180
+			if lat.to_f.abs > 90 || long.to_f.abs > 180
 				render json: {status:401, message: "Error: Longitude or Latitude are incorrect values"}
 			else
 				user = User.find_by(authtoken: token)
@@ -97,6 +97,7 @@ class ApiController < ApplicationController
 				else
 					render json: {status:400, message: "Error: User not found"}
 				end
+			end
 		else
 			render json: {status:401, message: "Error: Correct paramters are not given"}
 		end

@@ -96,6 +96,7 @@ class ApiController < ApplicationController
 				else
 					render json: {status:400, message: "Error: User not found"}
 				end
+			end
 		else
 			render json: {status:401, message: "Error: Correct paramters are not given"}
 		end

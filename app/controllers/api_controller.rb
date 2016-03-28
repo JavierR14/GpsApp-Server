@@ -1,7 +1,8 @@
 class ApiController < ApplicationController
 	# http_basic_authenticate_with email:ENV["API_AUTH_EMAIL"], :only => [:signup, :signin, :get_token]
 	#make sure any request that is not a signup, signin, or get_token has it's authtoken checked
-	before_filter :check_for_valid_authtoken, :except => [:signup, :signin, :get_token, :post_location]
+
+	before_filter :check_for_valid_authtoken, :except => [:signup, :signin, :get_token, :post_location, :get_location]
 
 	def signin
 	  if request.post?
@@ -86,7 +87,7 @@ class ApiController < ApplicationController
 			long = params[:longitude]
 			token = params[:auth_token]
 
-			if lat.abs > 90 || long.abs > 180
+			if lat.to_f.abs > 90 || long.to_f.abs > 180
 				render json: {status:401, message: "Error: Longitude or Latitude are incorrect values"}
 			else
 				user = User.find_by(authtoken: token)
@@ -96,9 +97,25 @@ class ApiController < ApplicationController
 				else
 					render json: {status:400, message: "Error: User not found"}
 				end
+			end
 		else
 			render json: {status:401, message: "Error: Correct paramters are not given"}
 		end
 	end
 
+	def get_location
+		if params && params[:email] && params[:auth_token]
+			email = params[:email]
+			user = User.find_by(email: email)
+			unless user == nil
+				lat = user.location_latitude
+				long = user.location_longitude
+				render json: {status:200, latitude: lat, longitude: long}
+			else
+				render json: {status:401, message: "Error: User not found"}
+			end
+		else
+			render json: {status:401, message: "Error: incorrect paramaters"}
+		end
+	end
 end

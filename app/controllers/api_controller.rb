@@ -6,7 +6,7 @@ class ApiController < ApplicationController
 	def signin
 	  if request.post?
 	    if params && params[:email]
-	      user = User.where(:email => params[:email]).first
+	      user = User.find_by(email: params[:email])
 
 	      unless user
 	      	user = User.new(first_name: params[:name].split(" ").first,
@@ -29,9 +29,9 @@ class ApiController < ApplicationController
 
 	def get_token
 	  if params && params[:email]
-	    user = User.where(:email => params[:email]).first
+	    user = User.find_by(email: params[:email])
 	    if user
-	      if !user.authtoken || (user.authtoken && user.authtoken_expiry < Time.now)
+	      if user.authtoken.nil? || (user.authtoken && user.authtoken_expiry < Time.now)
 	        auth_token = rand_string(20)
 	        auth_expiry = Time.now + (24*60*60)
 
@@ -65,7 +65,7 @@ class ApiController < ApplicationController
 
 	def check_for_valid_authtoken
 	  authenticate_or_request_with_http_token do |token, options|
-	    @user = User.where(:authtoken => token).first
+	    @user = User.find_by(authtoken: token)
 	  end
 	end
 
@@ -85,7 +85,17 @@ class ApiController < ApplicationController
 			lat = params[:latitude]
 			long = params[:longitude]
 			token = params[:auth_token]
- 			render json: {status:200, message: "long:#{long} - lat:#{lat} - token:#{token}"}
+
+			if lat.abs > 90 || long.abs > 180
+				render json: {status:401, message: "Error: Longitude or Latitude are incorrect values"}
+			else
+				user = User.find_by(authtoken: token)
+				unless user == nil
+					user.update_attributes(:location_longitude => long, :location_latitude => lat)
+					render json: {status:200, message: "long:#{long} - lat:#{lat} - token:#{token} added to db"}
+				else
+					render json: {status:400, message: "Error: User not found"}
+				end
 		else
 			render json: {status:401, message: "Error: Correct paramters are not given"}
 		end

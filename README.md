@@ -1,4 +1,6 @@
-# GpsApp-Server
+# Trackt-Server
+
+Link to Trackt application repo: https://github.com/JavierR14/GPSApp
 
 Setup for Postgres locally on Mac OS X
 * brew update
@@ -69,4 +71,3 @@ HEROKU
 	* to view server logs (or live logs)
 * heroku pg:reset DATABASE_URL, heroku run rake db:migrate
 	* equivalent to rake db:drop, rake db:create, aka, destroys db then recreates it
-
